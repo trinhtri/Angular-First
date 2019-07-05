@@ -1,0 +1,59 @@
+<div bsModal (onShown)="onShown()" #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #taskForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span *ngIf="emp.id">{{l("EditTask")}}: {{emp.name}}</span>
+                        <span *ngIf="!emp.id">{{l("CreateNewTask")}}</span>
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                                <input type="text" name="contactName" class="form-control"
+                                    [ngClass]="{'edited':emp.name}" [(ngModel)]="emp.name" required maxlength="256"
+                                    minlength="5">
+                                <label>{{l("Name")}}</label>
+                            </div>
+                            <div class="col alert alert-danger" role="alert"
+                                *ngIf="taskForm.controls.contactName?.errors?.required && taskForm.controls.contactName?.touched">
+                                Name is required!
+                            </div>
+
+                            <div class="col alert alert-danger" role="alert"
+                                *ngIf="taskForm.controls.contactName?.errors?.minlength && taskForm.controls.contactName?.touched">
+                                MinLength=5
+                            </div>
+                            
+                            <div class="form-group form-md-line-input form-md-floating-label">
+                                <input type="datetime" #birthdayUtc name="birthDay" class="form-control"
+                                    [(ngModel)]="emp.birthDay" [ngClass]="{'edited':emp.birthDay}"
+                                    [value]="formatDate('emp.birthDay')">
+                                <label>{{l("BirthDay")}}</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{l("Cancel")}}
+                    </button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!taskForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
+                        <i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

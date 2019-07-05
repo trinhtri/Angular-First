@@ -1,0 +1,55 @@
+<div class="row">
+  <div>
+    <button class="btn btn-primary margin-bottom-10" (click)="showTaskModal()">{{l('New Task')}}</button>
+    <ul class="list-group" id="TaskList">
+      <li>
+        <h2>
+          {{l('TaskList')}}
+          <span class="pull-right">
+            <select name="taskState" class="form-control" [(ngModel)]="selectedState" (change)="getTasks()">
+              <option *ngFor="let option of stateSelectOptions" [ngValue]="option.value">{{option.text}}</option>
+            </select>
+          </span>
+        </h2>
+      </li>
+  
+        <li *ngFor="let task of tasks " class="list-group-item">
+          <span class="pull-right lable" [ngClass]="getTaskLabel(task)">{{getTaskState(task)}}</span>
+          <a [routerLink]="['/app/main/tasks', task.id]">
+            {{task.title}}
+          </a>
+          <div class="list-group-item-text">
+            {{task.creationTime?.format('LLL')}}
+          </div>
+          <span *ngIf="!task.employeeId">{{l("Unassign")}}</span>
+          <a [routerLink]="['/app/main/employees']" [queryParams]="{filter: task.name}"
+            *ngIf="task.employeeId">{{task.name}}</a>
+          <div class="btn-group dropdown" style="float:right;margin-top:-15px;">
+            <button class="dropdown-toggle btn btn-xs btn-primary blue" data-toggle="dropdown"
+              tooltip="{{l('Actions')}}" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cog"></i><span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+
+              <li>
+                <a (click)="showTaskModal(task.id)">{{l('Edit')}}</a>
+              </li>
+
+              <li>
+                <a (click)="Del(task.id)">{{l('Delete')}}</a>
+              </li>
+
+              <li *ngIf="!task.employeeId">
+                <a (click)="showAllTaskModal(task.id)">{{l('Assign')}}</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+ 
+    </ul>
+  </div>
+</div>
+
+<addOrEditTaskModal #addOrEditTaskModal (modalSave)="onTaskUpdated($event)"></addOrEditTaskModal>
+<employeeModal #getAllEmployees (modalSave)="onTaskUpdated($event)"></employeeModal>
+<!-- <app-employees  [filterText]="selectedtask"></app-employees>  -->

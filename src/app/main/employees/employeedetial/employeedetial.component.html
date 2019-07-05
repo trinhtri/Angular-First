@@ -1,0 +1,35 @@
+<div>
+    <form *ngIf="active" (ngSubmit)="save()">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <span>{{emp.name|uppercase}}</span>
+                <span>{{emp.birthDay| date:'shortDate'}}</span> -->
+                <span>Name</span>
+
+                <input type="text" [(ngModel)]="emp.name" class="form-control" name="name">
+                <span>BirthDay</span>
+
+                <input autocomplete="off" type="datetime" appDateTimeInput   [(date)]="emp.birthDay"
+                    class="form-control" name="birthDay">   
+                <!-- 
+                <input autocomplete="off" type="datetime" appDateTimeInput [defaultdate]="emp.birthDay"
+                    (onDateChange)="onDateChange($event)" class="form-control" name="birthDay"> -->
+                <!-- <p-calendar [(ngModel)]="emp.birthDay"></p-calendar> -->
+                <!-- #birthdayUtc
+                    [(ngModel)]="emp.birthDay"
+                appDateTimeInput
+                -->
+                <!-- <input type="text" placeholder="Datepicker" class="form-control" [(ngModel)]="emp.birthDay" bsDatepicker> -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="close()">
+                <span>Cancel</span>
+            </button>
+            <button type="submit" class="btn btn-primary blue">
+                <i class="fa fa-save"></i>
+                <span>Save</span>
+            </button>
+        </div>
+    </form>
+</div>

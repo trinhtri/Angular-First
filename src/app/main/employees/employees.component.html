@@ -1,0 +1,90 @@
+<div>
+  <div class="row margin-bottom-5">
+    <div class="col-xs-6">
+      <div class="page-head">
+        <div class="page-title">
+          <h1>
+            <span> {{l('TaskList')}}</span>
+          </h1>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="portlet light margin-bottom-0">
+    <div class="portlet-title portlet-title-filter">
+      <div class="inputs inputs-full-width">
+        <div class="portlet-input">
+          <button pButton type="button" (click)="showEmployeeModal()" label="Add" class="btn btn-success"></button>
+          <button pButton type="button" (click)="Del()" class="btn btn-danger" label="Delete"></button>
+        </div>
+        <div class="form-group">
+          <!-- <label for="TenantsTableFilter">{{l('TenantNameOrTenancyCode')}}</label> -->
+          <div class="inputs inputs-full-width">
+            <div class="portlet-input">
+              <div class="input-group">
+                <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control"
+                  [placeholder]="l('SearchWithThreeDot')" type="text">
+                <span class="input-group-btn">
+                  <button (click)="getEmployees()" class="btn default" type="submit"><i class="icon-magnifier"></i></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="portlet-body">
+      <!--<Primeng-Datatable-Start>-->
+      <div class="primeng-datatable-container">
+        <p-dataTable [value]="employees" dataKey="id" [(selection)]="selectedEmpls" [paginator]="true" [rows]="10"
+          [headerCheckboxToggleAllPages]="true" [rowsPerPageOptions]="[5,10,15]">
+
+          <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+          <p-column field="" header="{{l('Actions')}}" p [sortable]="false" styleClass="width-percent-15">
+            <ng-template let-record="rowData" pTemplate="body">
+              <div class="btn-group dropdown">
+                <button class="dropdown-toggle btn btn-xs btn-primary blue" data-toggle="dropdown"
+                  tooltip="{{l('Actions')}}" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-cog"></i><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a (click)="showEmployeeModal(record.id)">{{l('Edit')}}</a>
+                  </li>
+                </ul>
+              </div>
+            </ng-template>
+          </p-column>
+          
+          <!-- <p-column field="name" header="name">
+            <ng-template let-empl="rowData" pTemplate="body">
+              <div class="ui-grid ui-grid-responsive ui-fluid">
+                <div class="ui-grid-row">{{empl.name}}</div>
+              </div>
+            </ng-template>
+          </p-column> -->
+          <p-column field="name" header="name">
+            <ng-template let-record="rowData" pTemplate="body">
+              <a 
+                [routerLink]="['/app/main/employees', record.id]" 
+              >
+                {{record.name}}
+              </a>
+              <!-- <a routerLink="/detail/{{record.id}}"> 
+                {{record.name}}
+              </a> -->
+            </ng-template>
+          </p-column>
+          <p-column field="age" header="age"></p-column>
+          <p-column field="pendingTask" header="pendingTask"></p-column>
+          <p-column field="completeTask" header="completeTask"></p-column>
+        </p-dataTable>
+      </div>
+      <!--<Primeng-Datatable-End>-->
+    </div>
+  </div>
+  <addOrEditEmployeeModal #addOrEditEmployeeModal (modalSave)="onEmployeeUpdated($event)"></addOrEditEmployeeModal>
+</div>

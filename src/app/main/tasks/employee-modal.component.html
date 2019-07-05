@@ -1,0 +1,58 @@
+<div bsModal 
+#emplModal="bs-modal" 
+class="modal fade" 
+tabindex="-1" 
+role="dialog" 
+aria-labelledby="emplModal"
+aria-hidden="true" 
+[config]="{backdrop: 'static'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #taskForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            Select Employee
+          </h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="md-radio-list">
+
+            <!-- <ul class="group-item">
+             <li *ngFor="let empl of empls" class="list-group-item">
+                <input type="radio" id="radEmp_{{empl.id}}" [(ngModel)]="employee.id" name="radio" value="{{empl.id}}" >
+                <label>{{empl.name}}</label>
+             </li>
+             [(ngModel)]="employee.id"
+           </ul> -->
+
+            <div class="md-radio" *ngFor="let empl of empls">
+              <input type="radio" id="RadEm_{{empl.id}}" name="RadEmpl" class="md-radiobtn" [(ngModel)]="employee.id"
+                value="{{empl.id}}">
+              <label for="RadEm_{{empl.id}}">
+                <span class="inc"></span>
+                <span class="check"></span>
+                <span class="box"></span>{{empl.name}}
+              </label>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+            {{l("Cancel")}}
+          </button>
+          <button type="button" (click)="save()" class="btn btn-primary blue" [buttonBusy]="saving"
+            [busyText]="l('SavingWithThreeDot')">
+            <i class="fa fa-save"></i>
+            <span>{{l("Save")}}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<form (ngSubmit)="save()">
+  <div class="row">
+    <div class="col-md-12">
+
+      <span>{{l("Title")}}</span>
+      <input type="text" [(ngModel)]="task.title" class="form-control" name="name">
+
+      <span>Discreption</span>
+      <input type="text" [(ngModel)]="task.discription" class="form-control" name="discription">
+
+      <span>State</span>
+      <select name="State" class="form-control" [(ngModel)]="task.state">
+        <option *ngFor="let option of stateSelectOptions" [(ngValue)]="option.value">
+          {{option.text}}
+        </option>
+      </select>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="close()">
+      <span>Cancel</span>
+    </button>
+    <button type="submit" class="btn btn-primary blue">
+      <i class="fa fa-save"></i>
+      <span>Save</span>
+    </button>
+  </div>
+</form>
+
+<!-- <p>{{task.title}}</p> -->

@@ -1,0 +1,96 @@
+<div bsModal (onShown)="onShown()" #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #taskForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off" [formGroup]="rfContact">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span *ngIf="emp.id">{{l("EditTask")}}: {{emp.name}}</span>
+                        <span *ngIf="!emp.id">{{l("CreateNewTask")}}</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-md-line-input form-md-floating-label no-hint"
+                                [ngClass]="displayFieldCss('name')">
+                                <input type="text" name="name" class="form-control" formControlName="name"
+                                    [ngClass]="{'edited':name}">
+                                <label>{{l("Name")}}</label>
+                            </div>
+
+                            <div class="col alert alert-danger" role="alert"
+                                *ngIf="rfContact.controls.name?.hasError('required') && submitted ">
+                                Name is required!
+                            </div>
+
+                            <!-- <div class="col alert alert-danger" role="alert" *ngIf="rfContact.controls.name?.hasError('required')
+                                   && rfContact.controls.dirty">
+                                
+                            Name is required!
+                        </div> -->
+                            <!-- rfContact.controls.name?.touched 
+                            && !emp.id
+                        -->
+
+                            <!--    
+                            <div *ngIf="rfContact.get('name').status === 'PENDING'">
+                                Checking...
+                            </div> -->
+
+                            <div
+                                *ngIf="rfContact.get('name').errors && rfContact.get('name').errors.nameTaken && submitted && !emp.id">
+                                😢 Oh noes, this name is already taken!
+                            </div>
+
+                            <!-- sử lý khi edit  -->
+
+                            <div
+                                *ngIf="rfContact.get('name').errors && rfContact.get('name').errors.nameTaken && submitted && emp.id">
+                                😢 Oh noes, this name is already taken!!
+                            </div>
+
+                            <div class="form-group form-md-line-input form-md-floating-label">
+                                <input type="datetime" #birthdayUtc name="birthday" class="form-control"
+                                    [ngClass]="{'edited':birthDay}" formControlName="birthDay"
+                                    [value]="formatSubscriptionEndDate(birthDay)">
+                                <label>{{l("BirthDay")}}</label>
+                            </div>
+
+                            <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                                <input type="text" name="email" class="form-control" formControlName="email"
+                                    [ngClass]="{'edited':email}">
+                                <label>{{l("Email")}}</label>
+                            </div>
+                            <div class="col alert alert-danger" role="alert"
+                                *ngIf="rfContact.controls.email?.hasError('required') && submitted">
+                                Email is required!
+                            </div>
+
+                            <div class="col alert alert-danger" role="alert"
+                                *ngIf="rfContact.controls.email?.hasError('email') && submitted ">
+                                Email is not format !!!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{l("Cancel")}}
+                    </button>
+                    <!-- [disabled]="!taskForm.form.valid" -->
+                    <button type="submit" class="btn btn-primary blue" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
+                        <i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
