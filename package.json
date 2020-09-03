@@ -29,7 +29,7 @@
     "block-ui": "^2.70.1",
     "bootstrap": "^3.4.1",
     "bootstrap-daterangepicker": "^2.1.25",
-    "bootstrap-select": "^1.12.2",
+    "bootstrap-select": "^1.13.6",
     "bootstrap-switch": "^3.3.4",
     "calendar": "^0.1.0",
     "codelyzer": "^3.2.1",
